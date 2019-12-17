@@ -1,12 +1,16 @@
-#include "food.hpp"
+#include "Food.hpp"
 #include <Arduino.h>
 
-Coord Food::GetFoodPosition() {
+//grid is 25x * 12y of 5x5 pixels
+Food::Food() {
+  foodPos.x = (5 * random(0, 24)) + 1;
+  foodPos.y = (5 * random(0, 11)) + 1;
+}
+
+Coord Food::GetPosition() {
   return foodPos;
 }
 
-void Food::PickFoodPosition() {
-  foodPos.x = random(2, 125);
-  foodPos.y = random(2, 61);
-  // to-do: check we're not overlapping the snake body
+void Food::Draw(GraphicsWrapper &graphics) {
+  graphics.DrawCircle(foodPos.x, foodPos.y, 2);
 }

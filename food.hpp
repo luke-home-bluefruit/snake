@@ -1,16 +1,14 @@
 #ifndef FOOD_HPP
 #define FOOD_HPP
+#include "Coord.hpp"
+#include "GameObject.hpp"
 
-struct Coord {
-  int x;
-  int y;
-};
-
-class Food {
+class Food : public GameObject {
   public:
-    Food() {}
-    Coord GetFoodPosition();
-    void PickFoodPosition();
+    Food();
+    Coord GetPosition();
+    void Draw(GraphicsWrapper &graphics);
+    
   private:
     Coord foodPos;
 };
