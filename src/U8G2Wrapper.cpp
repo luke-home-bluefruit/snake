@@ -23,5 +23,5 @@ void U8G2Wrapper::DrawCircle(int x, int y, int radius) {
 }
 
 void U8G2Wrapper::DrawRectangle(int x, int y, int width, int height) {
-  
+  u8g2.drawBox(x, y, width, height);
 }
