@@ -7,8 +7,8 @@ class Food : public GameObject {
   public:
     Food();
     Coord GetPosition();
-    void Draw(GraphicsWrapper &graphics);
-    
+    std::vector<Drawable> GetDrawables();
+
   private:
     Coord foodPos;
 };

@@ -19,7 +19,7 @@ bool U8G2Wrapper::Render() {
 }
 
 void U8G2Wrapper::DrawCircle(int x, int y, int radius) {
-  u8g2.drawCircle(x, y, radius);
+  u8g2.drawDisc(x, y, radius);
 }
 
 void U8G2Wrapper::DrawRectangle(int x, int y, int width, int height) {

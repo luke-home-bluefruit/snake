@@ -7,10 +7,11 @@
 class Snake : public GameObject {
   public:
     Snake();
-    void Draw(GraphicsWrapper &graphics);
+    std::vector<Drawable> GetDrawables();
     
   private:
-    std::vector<Coord> segments; 
+    std::vector<Coord> segments;
+    std::vector<int> GetRectangleToNextSegment(int x1, int y1, int x2, int y2);
 };
 
 #endif
