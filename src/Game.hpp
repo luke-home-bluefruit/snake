@@ -1,9 +1,11 @@
 #ifndef GAME_HPP
 #define GAME_HPP
-#include "GraphicsWrapper.hpp"
+
 #include "GameObject.hpp"
-#include <vector>
+#include "GraphicsWrapper.hpp"
+
 #include <string>
+#include <vector>
 
 class Game {
 public:
@@ -11,7 +13,10 @@ public:
   void Loop();
 
 private:
-  GraphicsWrapper&graphics;
+  void Update();
+  void Render();
+
+  GraphicsWrapper &graphics;
   std::vector<GameObject*> objects;
 };
 
