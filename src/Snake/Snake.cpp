@@ -1,5 +1,6 @@
 #include "Snake.hpp"
 
+#include <Arduino.h>
 #include <stdlib.h>
 
 Snake::Snake() {
@@ -8,15 +9,12 @@ Snake::Snake() {
   segments.push_back(Coord(20, 28));
   segments.push_back(Coord(16, 28));
   segments.push_back(Coord(12, 28));
-
-  count = 0;
 }
 
 void Snake::Update() {
   Move();
 
-  count = (count + 1) % 5;
-  if (count == 0) {
+  if (digitalRead(1) == LOW) {
     switch (direction) {
     case Direction::North:
       direction = Direction::East;

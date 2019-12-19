@@ -11,7 +11,9 @@ static Game *game;
 
 void setup(void) {
   U8G2Wrapper *graphics = new U8G2Wrapper(23, 22, 19, 20, 21);
-
+  
+  pinMode(1, INPUT_PULLUP);
+  
   Serial.begin(9600);
   unsigned int rngSeed = analogRead(ANALOG_PIN_0);
   randomSeed(rngSeed);

@@ -20,7 +20,6 @@ class Snake : public GameObject {
 
     std::vector<Coord> segments;
     Direction direction;
-    int count;
 };
 
 
