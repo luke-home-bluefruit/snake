@@ -4,13 +4,9 @@
 #include "Food.hpp"
 #include "Snake.hpp"
 
-#include <Arduino.h>
-
-Game::Game(GraphicsWrapper& graphics, unsigned int seed) : graphics(graphics) {
-  randomSeed(seed);
-
-  objects.push_back(new Snake());
-  objects.push_back(new Food());
+Game::Game(GraphicsWrapper &graphics, std::vector<GameObject*> &objectsIn) : graphics(graphics) {
+  for (std::size_t i = 0; i < objectsIn.size(); i++)
+    objects.push_back(objectsIn[i]);
 }
 
 void Game::Loop() {

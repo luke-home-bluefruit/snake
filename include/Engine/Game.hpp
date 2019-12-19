@@ -9,7 +9,7 @@
 
 class Game {
 public:
-  Game(GraphicsWrapper &graphics, unsigned int seed);
+  Game(GraphicsWrapper &graphics, std::vector<GameObject*> &objectsIn);
   void Loop();
 
 private:
