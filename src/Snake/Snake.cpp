@@ -1,9 +1,11 @@
 #include "Snake.hpp"
 
-#include <Arduino.h>
 #include <stdlib.h>
 
-Snake::Snake() {
+Snake::Snake(ButtonDriver &buttons) {
+  buttons.RegisterKeyPress(0, std::bind(&Snake::KeyAnticlockwisePressCallback, this));
+  buttons.RegisterKeyPress(1, std::bind(&Snake::KeyClockwisePressCallback, this));
+
   direction = Direction::East;
 
   segments.push_back(Coord(20, 28));
@@ -13,26 +15,6 @@ Snake::Snake() {
 
 void Snake::Update() {
   Move();
-
-  if (digitalRead(1) == LOW) {
-    switch (direction) {
-    case Direction::North:
-      direction = Direction::East;
-      break;
-
-    case Direction::East:
-      direction = Direction::South;
-      break;
-
-    case Direction::South:
-      direction = Direction::West;
-      break;
-
-    case Direction::West:
-      direction = Direction::North;
-      break;
-    }
-  }
 }
 
 std::vector<Drawable> Snake::GetDrawables() {
@@ -88,4 +70,44 @@ std::vector<int> Snake::GetRectangleToNextSegment(int x1, int y1, int x2, int y2
 
   std::vector<int> properties = { x, y, w, h };
   return properties;
+}
+
+void Snake::KeyAnticlockwisePressCallback() {
+  switch (direction) {
+  case Direction::North:
+    direction = Direction::West;
+    break;
+
+  case Direction::East:
+    direction = Direction::North;
+    break;
+
+  case Direction::South:
+    direction = Direction::East;
+    break;
+
+  case Direction::West:
+    direction = Direction::South;
+    break;
+  }
+}
+
+void Snake::KeyClockwisePressCallback() {
+  switch (direction) {
+  case Direction::North:
+    direction = Direction::East;
+    break;
+
+  case Direction::East:
+    direction = Direction::South;
+    break;
+
+  case Direction::South:
+    direction = Direction::West;
+    break;
+
+  case Direction::West:
+    direction = Direction::North;
+    break;
+  }
 }

@@ -14,10 +14,7 @@ Coord Food::GetPosition() {
 void Food::Update() { }
 
 std::vector<Drawable> Food::GetDrawables() {
-  std::vector<Drawable> drawables(1, Drawable());
-
-  drawables[0].shape = Drawable::Shape::Circle;
-  drawables[0].properties = std::vector<int> { foodPos.x + 1, foodPos.y + 1, 1 };
-
-  return drawables;
+  return {
+    { Drawable::Shape::Circle, { foodPos.x + 1, foodPos.y + 1, 1 } }
+  };
 }

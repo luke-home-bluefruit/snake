@@ -4,14 +4,16 @@
 #include "Food.hpp"
 #include "Snake.hpp"
 
-Game::Game(GraphicsWrapper &graphics, std::vector<GameObject*> &objectsIn) : graphics(graphics) {
-  for (std::size_t i = 0; i < objectsIn.size(); i++)
-    objects.push_back(objectsIn[i]);
+Game::Game(GraphicsWrapper &graphics, std::vector<GameObject*> &objects, ButtonDriver &buttons) :
+  buttons(buttons),
+  graphics(graphics),
+  objects(objects) {
 }
 
 void Game::Loop() {
  Update();
  Render();
+ buttons.Task();
 }
 
 void Game::Update() {
