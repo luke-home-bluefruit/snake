@@ -1,19 +1,19 @@
 #ifndef FOOD_HPP
 #define FOOD_HPP
 
-#include "Coord.hpp"
+#include "Vec2.hpp"
 #include "GameObject.hpp"
 
 class Food : public GameObject {
   public:
     Food();
-    Coord GetPosition();
 
-    void Update();
     std::vector<Drawable> GetDrawables();
+    Moveable GetMoveable();
+    void SetMoveable(Moveable newMoveable);
 
   private:
-    Coord foodPos;
+    Moveable moveable;
 };
 
 #endif

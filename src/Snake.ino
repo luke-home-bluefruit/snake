@@ -18,10 +18,15 @@ void setup(void) {
 
   ButtonDriver *buttons = new ButtonDriver();
 
+  Snake* snake = new Snake();
   std::vector<GameObject*> objects {
-    new Snake(*buttons),
+    snake,
     new Food()
   };
+
+  buttons->RegisterKeyPress(0, std::bind(&Snake::TurnAnticlockwise, snake));
+  buttons->RegisterKeyPress(1, std::bind(&Snake::TurnClockwise, snake));
+  
   game = new Game(*graphics, objects, *buttons);
 }
 

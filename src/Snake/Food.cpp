@@ -3,18 +3,23 @@
 #include <Arduino.h>
 
 Food::Food() {
-  foodPos.x = (4 * random(0, 31));
-  foodPos.y = (4 * random(0, 15));
+  moveable.position.x = random(0, 31);
+  moveable.position.y = random(0, 15);
+  moveable.velocity.x = 0;
+  moveable.velocity.y = 0;
+  moveable.edgeWrapping = false;
 }
-
-Coord Food::GetPosition() {
-  return foodPos;
-}
-
-void Food::Update() { }
 
 std::vector<Drawable> Food::GetDrawables() {
   return {
-    { Drawable::Shape::Circle, { foodPos.x + 1, foodPos.y + 1, 1 } }
+    { Drawable::Shape::Circle, { (moveable.position.x * 4) + 1, (moveable.position.y * 4) + 1, 1 } }
   };
+}
+
+Moveable Food::GetMoveable() {
+  return moveable;
+}
+
+void Food::SetMoveable(Moveable newMoveable) {
+  moveable = newMoveable;
 }

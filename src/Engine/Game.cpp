@@ -1,8 +1,9 @@
 #include "Game.hpp"
 
-#include "Coord.hpp"
 #include "Food.hpp"
 #include "Snake.hpp"
+
+#include <Arduino.h>
 
 Game::Game(GraphicsWrapper &graphics, std::vector<GameObject*> &objects, ButtonDriver &buttons) :
   buttons(buttons),
@@ -11,14 +12,21 @@ Game::Game(GraphicsWrapper &graphics, std::vector<GameObject*> &objects, ButtonD
 }
 
 void Game::Loop() {
- Update();
- Render();
- buttons.Task();
+  buttons.Task();
+  GameTick();
+  Render();
 }
 
-void Game::Update() {
+void Game::GameTick() {
   for (std::size_t i = 0; i < objects.size(); i++) {
-    objects[i]->Update();
+    Moveable moveable = objects[i]->GetMoveable();
+    moveable.position.x += moveable.velocity.x;
+    moveable.position.y += moveable.velocity.y;
+    if (moveable.edgeWrapping) {
+      moveable.position.x = (moveable.position.x + 32) % 32;
+      moveable.position.y = (moveable.position.y + 16) % 16;
+    }
+    objects[i]->SetMoveable(moveable);
   }
 }
 

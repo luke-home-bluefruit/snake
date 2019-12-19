@@ -14,9 +14,10 @@ public:
   void Loop();
 
 private:
-  void Update();
+  void GameTick();
   void Render();
 
+  int lastTickTime;
   ButtonDriver &buttons;
   GraphicsWrapper &graphics;
   std::vector<GameObject*> objects;

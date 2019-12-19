@@ -2,19 +2,30 @@
 
 #include <stdlib.h>
 
-Snake::Snake(ButtonDriver &buttons) {
-  buttons.RegisterKeyPress(0, std::bind(&Snake::KeyAnticlockwisePressCallback, this));
-  buttons.RegisterKeyPress(1, std::bind(&Snake::KeyClockwisePressCallback, this));
+Snake::Snake() {
+  moveable.position.x = 2;
+  moveable.position.y = 5;
+  moveable.velocity.x = 1;
+  moveable.velocity.y = 0;
+  moveable.edgeWrapping = true;
 
-  direction = Direction::East;
-
-  segments.push_back(Coord(20, 28));
-  segments.push_back(Coord(16, 28));
-  segments.push_back(Coord(12, 28));
+  size = 15;
+  segments.push_back({
+    moveable.position.x,
+    moveable.position.y
+  });
 }
 
-void Snake::Update() {
-  Move();
+void Snake::TurnAnticlockwise() {
+  int tmp = moveable.velocity.y;
+  moveable.velocity.y = moveable.velocity.x;
+  moveable.velocity.x = -tmp;
+}
+
+void Snake::TurnClockwise() {
+  int tmp = moveable.velocity.x;
+  moveable.velocity.x = moveable.velocity.y;
+  moveable.velocity.y = -tmp;
 }
 
 std::vector<Drawable> Snake::GetDrawables() {
@@ -25,41 +36,25 @@ std::vector<Drawable> Snake::GetDrawables() {
     drawables[i].shape = Drawable::Shape::Rectangle;
 
     if (i != segments.size() - 1)
-      drawables[i].properties = GetRectangleToNextSegment(segments[i].x, segments[i].y, segments[i + 1].x, segments[i + 1].y);
+      drawables[i].properties = GetRectangleToNextSegment(segments[i].x * 4, segments[i].y * 4, segments[i + 1].x * 4, segments[i + 1].y * 4);
     else
-      drawables[i].properties = std::vector<int> { segments[i].x, segments[i].y, 3, 3 };    
+      drawables[i].properties = std::vector<int> { segments[i].x * 4, segments[i].y * 4, 3, 3 };    
   }
 
   return drawables;
 }
 
-void Snake::Move() {
-  int newX = segments[0].x;
-  int newY = segments[0].y;
+Moveable Snake::GetMoveable() {
+  return moveable;
+}
 
-  switch (direction) {
-  case Direction::North:
-    newY -= 4;
-    break;
+void Snake::SetMoveable(Moveable newMoveable) {
+  moveable = newMoveable;
+  segments.insert(segments.begin(), moveable.position);
+  if (size >= segments.size())
+    return;
 
-  case Direction::East:
-    newX += 4;
-    break;
-
-  case Direction::South:
-    newY += 4;
-    break;
-
-  case Direction::West:
-    newX -= 4;
-    break;
-  }
-
-  newX = (newX + 128) % 128;
-  newY = (newY + 64) % 64;
-
-  segments.insert(segments.begin(), Coord(newX, newY));
-  segments.pop_back();
+  (void)segments.pop_back();
 }
 
 std::vector<int> Snake::GetRectangleToNextSegment(int x1, int y1, int x2, int y2) {
@@ -81,44 +76,4 @@ std::vector<int> Snake::GetRectangleToNextSegment(int x1, int y1, int x2, int y2
 
   std::vector<int> properties = { x, y, w, h };
   return properties;
-}
-
-void Snake::KeyAnticlockwisePressCallback() {
-  switch (direction) {
-  case Direction::North:
-    direction = Direction::West;
-    break;
-
-  case Direction::East:
-    direction = Direction::North;
-    break;
-
-  case Direction::South:
-    direction = Direction::East;
-    break;
-
-  case Direction::West:
-    direction = Direction::South;
-    break;
-  }
-}
-
-void Snake::KeyClockwisePressCallback() {
-  switch (direction) {
-  case Direction::North:
-    direction = Direction::East;
-    break;
-
-  case Direction::East:
-    direction = Direction::South;
-    break;
-
-  case Direction::South:
-    direction = Direction::West;
-    break;
-
-  case Direction::West:
-    direction = Direction::North;
-    break;
-  }
 }

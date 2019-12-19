@@ -2,13 +2,15 @@
 #define GAME_OBJECT_HPP
 
 #include "Drawable.hpp"
+#include "Moveable.hpp"
 
 #include <vector>
 
 class GameObject {
 public:
-  virtual void Update() = 0;
   virtual std::vector<Drawable> GetDrawables() = 0;
+  virtual Moveable GetMoveable() = 0;
+  virtual void SetMoveable(Moveable moveable) = 0;
 };
 
 #endif
