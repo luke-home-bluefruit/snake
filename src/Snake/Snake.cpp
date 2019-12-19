@@ -9,7 +9,7 @@ Snake::Snake() {
   moveable.velocity.y = 0;
   moveable.edgeWrapping = true;
 
-  size = 15;
+  size = 3;
   segments.push_back({
     moveable.position.x,
     moveable.position.y
@@ -57,6 +57,10 @@ void Snake::SetMoveable(Moveable newMoveable) {
   (void)segments.pop_back();
 }
 
+void Snake::OnCollision(GameObject *other) {
+  size++;
+}
+
 std::vector<int> Snake::GetRectangleToNextSegment(int x1, int y1, int x2, int y2) {
   int w = abs(x2 - x1) + 3;
   int h = abs(y2 - y1) + 3;
@@ -77,3 +81,4 @@ std::vector<int> Snake::GetRectangleToNextSegment(int x1, int y1, int x2, int y2
   std::vector<int> properties = { x, y, w, h };
   return properties;
 }
+

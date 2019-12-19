@@ -11,6 +11,7 @@ public:
   virtual std::vector<Drawable> GetDrawables() = 0;
   virtual Moveable GetMoveable() = 0;
   virtual void SetMoveable(Moveable moveable) = 0;
+  virtual void OnCollision(GameObject *other) = 0;
 };
 
 #endif

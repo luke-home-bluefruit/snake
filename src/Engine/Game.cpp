@@ -28,6 +28,17 @@ void Game::GameTick() {
     }
     objects[i]->SetMoveable(moveable);
   }
+
+  for (std::size_t i = 0; i < objects.size(); i++) {
+    Moveable a = objects[i]->GetMoveable(); 
+    for (std::size_t j = i + 1; j < objects.size(); j++) {
+      Moveable b = objects[j]->GetMoveable(); 
+      if ((a.position.x == b.position.x) && (a.position.y == b.position.y)) {
+        objects[i]->OnCollision(objects[j]);
+        objects[j]->OnCollision(objects[i]);
+      }
+    }
+  }  
 }
 
 void Game::Render() {

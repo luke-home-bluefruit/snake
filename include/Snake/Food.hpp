@@ -5,15 +5,16 @@
 #include "GameObject.hpp"
 
 class Food : public GameObject {
-  public:
-    Food();
+public:
+  Food();
 
-    std::vector<Drawable> GetDrawables();
-    Moveable GetMoveable();
-    void SetMoveable(Moveable newMoveable);
-
-  private:
-    Moveable moveable;
+  std::vector<Drawable> GetDrawables();
+  Moveable GetMoveable();
+  void SetMoveable(Moveable newMoveable);
+  void OnCollision(GameObject *other);
+  
+private:
+  Moveable moveable;
 };
 
 #endif
