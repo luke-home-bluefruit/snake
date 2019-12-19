@@ -55,18 +55,29 @@ void Snake::Move() {
     break;
   }
 
-  newX = newX % 128;
-  newY = newY % 64;
+  newX = (newX + 128) % 128;
+  newY = (newY + 64) % 64;
 
   segments.insert(segments.begin(), Coord(newX, newY));
   segments.pop_back();
 }
 
 std::vector<int> Snake::GetRectangleToNextSegment(int x1, int y1, int x2, int y2) {
-  int x = (x1 < x2) ? x1 : x2;
-  int y = (y1 < y2) ? y1 : y2;
   int w = abs(x2 - x1) + 3;
   int h = abs(y2 - y1) + 3;
+  int x = (x1 < x2) ? x1 : x2;
+  int y = (y1 < y2) ? y1 : y2;
+
+  if (w > 7) // horizontal wrapping
+  {
+    x = x1;
+    w = 3;
+  }
+  if (h > 7) // vertical wrapping
+  {
+    y = y1;
+    h = 3;
+  }
 
   std::vector<int> properties = { x, y, w, h };
   return properties;
